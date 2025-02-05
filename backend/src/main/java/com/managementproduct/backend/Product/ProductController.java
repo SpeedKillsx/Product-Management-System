@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.managementproduct.backend.APIResponse.APIResponse;
 import com.managementproduct.backend.Category.Category;
 import com.managementproduct.backend.DTO.ProductDTO;
 
@@ -35,7 +36,7 @@ public class ProductController {
 
 
     @GetMapping("/")
-    public ResponseEntity<List<ProductDTO>> getAllProduct() {
+    public ResponseEntity<APIResponse<List<ProductDTO>>> getAllProduct() {
         List<Product> products = this.productService.getAllProducts();
         if (products.isEmpty()){
             return ResponseEntity.noContent().build();
@@ -43,16 +44,16 @@ public class ProductController {
         List<ProductDTO> productDTOs = products.stream()
                                            .map((product -> this.productService.converToDTO(product))) // Conversion en ProductDTO
                                            .collect(Collectors.toList());
-        return ResponseEntity.ok(productDTOs);
+        return ResponseEntity.ok(new APIResponse<>(productDTOs));
 
     }
     @PostMapping("/")
-    public Product addProduct(@RequestBody Product product) throws IllegalStateException{
+    public Product addProduct(@RequestBody ProductDTO product) throws IllegalStateException{
         return this.productService.addProduct(product);
     }
 
     @PutMapping("/{id}")
-    public Product updateProduct(@RequestBody Product product,    @PathVariable Long id){
+    public Product updateProduct(@RequestBody ProductDTO product,    @PathVariable Long id){
         return this.productService.updateProduct(product, id);
     }
     
@@ -62,11 +63,13 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public List<Product> multiSearch(@RequestParam(required = false) Category category, 
+    public ResponseEntity<APIResponse<List<ProductDTO>>> multiSearch(@RequestParam(required = false) Category category, 
                                     @RequestParam(required = false) String description,
                                     @RequestParam(required = false) Double price, 
                                     @RequestParam(required = false) Integer quantity){
-        return this.productService.geProductsByMulti(category, description, price, quantity);
+        return ResponseEntity.ok(new APIResponse<>(this.productService.geProductsByMulti(category, description, price, quantity).stream().
+        map((p->this.productService.converToDTO(p))).collect(Collectors.toList())
+        ));
     }
 
 }

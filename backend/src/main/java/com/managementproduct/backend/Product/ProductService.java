@@ -33,19 +33,30 @@ public class ProductService {
         return this.productRepository.findAll();
     }
 
-    public Product addProduct(Product product) throws EntityNotFoundException {
-        Long categoryId = product.getCategory().getId();
-        Category category = prodCategoryRepository.getCategoryByID(categoryId)
-                .orElseThrow(() -> new EntityNotFoundException("Category with ID " + categoryId + " does not exist"));
-
+    public Product addProduct(ProductDTO productDTO) throws EntityNotFoundException {
+        Category category = prodCategoryRepository.findByName(productDTO.getCategory_name())
+                .orElseThrow(() -> new EntityNotFoundException("Category with name " + productDTO.getCategory_name() + " does not exist"));
+    
+        Product product = new Product();
+        product.setName(productDTO.getName());
+        product.setDescription(productDTO.getDescription());
+        product.setPrice(productDTO.getPrice());
+        product.setQuantity(productDTO.getQuantity());
         product.setCategory(category);
-
+        
         return this.productRepository.save(product);
     }
 
-    public Product updateProduct(Product product, Long id) throws EntityNotFoundException{
-        Product previousProduct = this.productRepository.findById(id).orElseThrow(()->
-        new EntityNotFoundException("EROR: The selected product doesn't exist."));
+    public Product updateProduct(ProductDTO productDTO, Long id) throws EntityNotFoundException{
+        Product previousProduct = this.productRepository.findById(id).orElseThrow(()->new EntityNotFoundException("EROR: The selected product doesn't exist."));
+        Category category = prodCategoryRepository.findByName(productDTO.getCategory_name()).orElseThrow(() -> new EntityNotFoundException("Category with name " + productDTO.getCategory_name() + " does not exist"));
+        
+        Product product = new Product();
+        product.setName(productDTO.getName());
+        product.setDescription(productDTO.getDescription());
+        product.setPrice(productDTO.getPrice());
+        product.setQuantity(productDTO.getQuantity());
+        product.setCategory(category);
         previousProduct.update(product);
          return this.productRepository.save(previousProduct);
     }

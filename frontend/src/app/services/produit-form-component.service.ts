@@ -31,5 +31,5 @@ export class ProduitFormService {
                 return throwError(() => new Error('Échec de l\'ajout du produit.'));
             })
         );
-}
+  }
 }

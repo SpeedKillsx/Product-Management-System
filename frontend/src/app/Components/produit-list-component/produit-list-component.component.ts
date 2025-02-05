@@ -1,8 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { APP_ID, Component, inject, Inject, OnInit } from '@angular/core';
 import { Product } from '../../model/class/Product';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ProduitListServiceService } from '../../services/produit-list-service.service';
+import { catchError, Observable } from 'rxjs';
+import { APIData } from '../../model/interface/APIData';
+import { error } from 'console';
 @Component({
   selector: 'app-produit-list-component',
   standalone: true,
@@ -12,16 +16,19 @@ import { CommonModule } from '@angular/common';
 })
 export class ProduitListComponentComponent implements OnInit{
   productList: Product[] = [];
-  constructor(private http:HttpClient){}
+  
+  prodListComponent = inject(ProduitListServiceService);
   ngOnInit(): void {
     this.getAllProduct();
   }
 
-  getAllProduct(){
-    this.http.get('http://localhost:8080/api/v1/produits/').subscribe((res:any)=>{
-      this.productList  = res;
+  getAllProduct() {
+    this.prodListComponent.getAllProduct().subscribe((products:APIData) => {
+      this.productList = products.data;
+      
+    }, (error)=>{
+      console.log("Error : ", error);
     })
   }
-  
 
 }

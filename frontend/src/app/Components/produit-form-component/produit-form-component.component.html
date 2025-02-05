@@ -1,32 +1,39 @@
-<form>
+<form [formGroup]="formgroupe">
     <div class="row pt-2 center">
         <div class="col-6">
             <div class="form-group">
                 <label for="nameInput">Product Name</label>
-                <input type="text" class="form-control" id="nameInput" placeholder="Product name">
+                <input  formControlName="name"  type="text" class="form-control" id="nameInput" placeholder="Product name">
             </div>
         </div>
         <div class="col-6">
             <div class="form-group">
                 <label for="descriptionInput">Product Description</label>
-                <textarea class="form-control" id="descriptionInput" placeholder="Product description"></textarea>
+                <textarea formControlName="description" class="form-control" id="descriptionInput" placeholder="Product description"></textarea>
             </div>
         </div>
 
         <div class="col-6">
             <div class="form-group">
                 <label for="priceInput">Product Price</label>
-                <input type="text" class="form-control" id="priceInput" placeholder="Product price">
+                <input formControlName="price" type="text" class="form-control" id="priceInput" placeholder="Product price">
             </div>
         </div>
 
         <div class="col-6">
             <div class="form-group">
                 <label for="quantityInput">Product Quantity</label>
-                <input type="text" class="form-control" id="quantityInput" placeholder="Product quantity">
+                <input formControlName="quantity"   type="text" class="form-control" id="quantityInput" placeholder="Product quantity">
             </div>
         </div>
+        <div class="col-6">
+            <select name="" id="" formControlName="category_name">
+                <option *ngFor="let category of categoriesList" 
+                    [value]="category.name" >
+                        {{category.name}} 
+            </option>
+            </select>
+        </div>
     </div>
-    
-    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+<button type="submit" class="btn btn-primary" (click)="addProduct()">Submit</button>

@@ -56,4 +56,11 @@ public class ProductService {
         }
         return ResponseEntity.ok().body("The row is not delted").getStatusCode();
     }
+
+    public List<Product> geProductsByMulti(Category category, String name, Double price, Integer quantity) {
+        return productRepository.multiSearch(category, name, price, quantity);
+    }
+
+
+    
 }

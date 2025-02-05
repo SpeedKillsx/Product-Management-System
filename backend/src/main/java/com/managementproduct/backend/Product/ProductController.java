@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.managementproduct.backend.Category.Category;
+
 import java.net.http.HttpResponse;
 import java.util.List;
 
@@ -47,6 +49,14 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public  HttpStatusCode   deleteProduct(@PathVariable Long id){
         return this.productService.deleteProduct(id);
+    }
+
+    @GetMapping("/search")
+    public List<Product> multiSearch(@RequestParam(required = false) Category category, 
+                                    @RequestParam(required = false) String description,
+                                    @RequestParam(required = false) Double price, 
+                                    @RequestParam(required = false) Integer quantity){
+        return this.productService.geProductsByMulti(category, description, price, quantity);
     }
 
 }

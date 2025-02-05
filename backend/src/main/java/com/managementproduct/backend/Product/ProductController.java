@@ -5,9 +5,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.managementproduct.backend.Category.Category;
+import com.managementproduct.backend.DTO.ProductDTO;
 
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
@@ -33,8 +35,16 @@ public class ProductController {
 
 
     @GetMapping("/")
-    public List<Product> getAllProduct() {
-        return this.productService.getAllProducts();
+    public ResponseEntity<List<ProductDTO>> getAllProduct() {
+        List<Product> products = this.productService.getAllProducts();
+        if (products.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        List<ProductDTO> productDTOs = products.stream()
+                                           .map((product -> this.productService.converToDTO(product))) // Conversion en ProductDTO
+                                           .collect(Collectors.toList());
+        return ResponseEntity.ok(productDTOs);
+
     }
     @PostMapping("/")
     public Product addProduct(@RequestBody Product product) throws IllegalStateException{

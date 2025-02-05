@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.managementproduct.backend.Category.Category;
 import com.managementproduct.backend.Category.CategoryRepository;
+import com.managementproduct.backend.DTO.ProductDTO;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -59,6 +60,10 @@ public class ProductService {
 
     public List<Product> geProductsByMulti(Category category, String name, Double price, Integer quantity) {
         return productRepository.multiSearch(category, name, price, quantity);
+    }
+
+    public ProductDTO converToDTO(Product p ){
+        return new ProductDTO(p.getName(), p.getDescription(), p.getPrice(), p.getQuantity(), p.getCategory().getname());
     }
 
 

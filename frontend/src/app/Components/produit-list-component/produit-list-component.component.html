@@ -1,0 +1,23 @@
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Category</th>  
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of productList"> 
+                
+                <td scope="col">{{ product.name }}</td>
+                <td scope="col">{{ product.description }}</td>
+                <td scope="col">{{ product.price }}</td>
+                <td scope="col">{{ product.quantity }}</td>
+                <td scope="col">{{ product.category_name}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

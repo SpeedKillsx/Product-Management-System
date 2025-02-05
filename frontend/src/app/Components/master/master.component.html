@@ -1,0 +1,15 @@
+<div class="row-2 center">
+    <div class="col-3">
+        <button class="btn "[ngClass]="currentPage == 'ADD' ? 'btn-primary':'btn-secondary'"  (click)="changePage('ADD')"  >Add a product</button>
+        <button class="btn  "[ngClass]="currentPage == 'UPDATE' ? 'btn-primary':'btn-secondary'"  (click)="changePage('UPDATE')" >Update a product</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-3" *ngIf="currentPage == 'ADD'">
+        <app-produit-form-component></app-produit-form-component>
+    </div>
+    <div class="col-3" *ngIf="currentPage == 'UPDATE'">
+        
+    </div>
+</div>

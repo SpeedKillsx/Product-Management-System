@@ -6,6 +6,9 @@
         <div class="col-md-4 text-center">
             <button class="btn w-100" [ngClass]="currentPage == 'UPDATE' ? 'btn-primary' : 'btn-secondary'" (click)="changePage('UPDATE')">Update a product</button>
         </div>
+        <div class="col-md-4 text-center">
+            <button class="btn w-100" [ngClass]="currentPage == 'SEARCH' ? 'btn-primary' : 'btn-secondary'" (click)="changePage('SEARCH')">Search a product</button>
+        </div>
     </div>
 
     <div class="row justify-content-center">
@@ -14,6 +17,9 @@
         </div>
         <div class="col-md-6" *ngIf="currentPage == 'UPDATE'">
             <app-produit-detail></app-produit-detail>
+        </div>
+        <div class="col-md-6" *ngIf="currentPage == 'SEARCH'">
+            <app-recherche-produit></app-recherche-produit>
         </div>
     </div>
 </div>

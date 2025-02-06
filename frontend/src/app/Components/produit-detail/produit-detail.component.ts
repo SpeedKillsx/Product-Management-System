@@ -20,7 +20,7 @@ export class ProduitDetailComponent implements OnInit{
   
   productList: Product[] = [];
   categoriesList: Category[] = [];
-  
+  productId:number = 0;
   selectedId:number = 0;
   prodListService = inject(ProduitListServiceService);
   prodFormService = inject(ProduitFormService);
@@ -49,6 +49,7 @@ export class ProduitDetailComponent implements OnInit{
     */
     UpdateListe(){
       this.prodListService.getAllProduct().subscribe((res:APIData)=>{
+        console.log(res.data);
         this.productList = res.data;
       })
     }
@@ -69,7 +70,7 @@ export class ProduitDetailComponent implements OnInit{
           // then for each cell, return its textContent by mapping on the array
           const tds = Array.from(row.cells).map(td => td.textContent);
           this.selectedId = idx;
-          
+          this.productId =  this.productList[this.selectedId].id;
           this.formgroupe.controls['name'].setValue(tds[0]);
           this.formgroupe.controls['description'].setValue(tds[1]);
           this.formgroupe.controls['price'].setValue(tds[2]);
@@ -82,7 +83,7 @@ export class ProduitDetailComponent implements OnInit{
     // Update the product from the table
     updateProduct(){
       const formValue = this.formgroupe.value;
-      this.prodDetailService.updateProduct(formValue).subscribe((res:APIData)=>{
+      this.prodDetailService.updateProduct({...formValue, id:this.productId}).subscribe((res:APIData)=>{
           if(res){
             alert("Update Done");
           }else{

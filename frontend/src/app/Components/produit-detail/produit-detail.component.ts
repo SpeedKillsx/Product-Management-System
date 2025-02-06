@@ -37,7 +37,9 @@ export class ProduitDetailComponent implements OnInit{
       this.UpdateListe();
       
     }
-
+    /*
+      Load the products 
+    */
     UpdateListe(){
       this.prodListService.getAllProduct().subscribe((res:APIData)=>{
         this.productList = res.data;
@@ -60,15 +62,18 @@ export class ProduitDetailComponent implements OnInit{
           // then for each cell, return its textContent by mapping on the array
           const tds = Array.from(row.cells).map(td => td.textContent);
           this.selectedId = idx;
-          
+          console.log('tds', tds)
           // Log the row index
           console.log('row index:', this.selectedId);
+          this.formgroupe.controls['name'].setValue(tds[0]);
+          this.formgroupe.controls['description'].setValue(tds[1]);
+          this.formgroupe.controls['price'].setValue(tds[2]);
+          this.formgroupe.controls['quantity'].setValue(tds[3]);
+          this.formgroupe.controls['category_name'].setValue(tds[4]);
          
         });
       });
-
-
-
       
+     
     }
 }

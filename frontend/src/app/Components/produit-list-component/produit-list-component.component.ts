@@ -3,7 +3,7 @@ import { Product } from '../../model/class/Product';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ProduitListServiceService } from '../../services/produit-list-service.service';
+import { ProduitListServiceService } from '../../services/ProduitListService/produit-list-service.service';
 import { catchError, Observable } from 'rxjs';
 import { APIData } from '../../model/interface/APIData';
 import { error } from 'console';

@@ -1,1 +1,49 @@
-<p>recherche-produit works!</p>
+<form >
+    <div class="row g-3">
+      <!-- Nom du produit -->
+      <div class="col-md-4">
+        <label for="name" class="form-label">Product Name</label>
+        <input type="text" id="name" class="form-control" formControlName="name" placeholder="Search by name">
+      </div>
+  
+      <!-- Catégorie -->
+      <div class="col-md-4">
+        <label for="category" class="form-label">Category</label>
+        <select id="category" class="form-select" formControlName="category">
+          <option value="">All Categories</option>
+          <option *ngFor="let category of categoriesList" [value]="category.name">{{ category.name }}</option>
+        </select>
+      </div>
+  
+      <!-- Plage de prix -->
+      <div class="col-md-4">
+        <label for="minPrice" class="form-label">Price Range</label>
+        <div class="d-flex">
+          <input type="number" id="minPrice" class="form-control me-2" formControlName="minPrice" placeholder="Min">
+          <input type="number" id="maxPrice" class="form-control" formControlName="maxPrice" placeholder="Max">
+        </div>
+      </div>
+  
+      <!-- Bouton Rechercher -->
+      <div class="col-md-12 text-center">
+        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="button" class="btn btn-secondary ms-2" >Reset</button>
+      </div>
+    </div>
+  </form>
+  
+  <!-- Affichage des résultats -->
+  <div class="mt-4">
+    <!-- <h4>Search Results ({{ filteredProducts.length }} products found)</h4> -->
+    <div *ngIf="filteredProducts.length > 0; else noResults">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let product of filteredProducts">
+          <strong>{{ product.name }}</strong> - {{ product.category }} - ${{ product.price }}
+        </li>
+      </ul>
+    </div>
+    <ng-template #noResults>
+      <p>No products found.</p>
+    </ng-template>
+  </div>
+  

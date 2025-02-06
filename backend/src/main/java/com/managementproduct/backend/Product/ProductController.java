@@ -63,11 +63,12 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<APIResponse<List<ProductDTO>>> multiSearch(@RequestParam(required = false) Category category, 
-                                    @RequestParam(required = false) String description,
+    public ResponseEntity<APIResponse<List<ProductDTO>>> multiSearch(@RequestParam(required = false) String category_name, 
+                                    @RequestParam(required = false) String name,
                                     @RequestParam(required = false) Double price, 
-                                    @RequestParam(required = false) Integer quantity){
-        return ResponseEntity.ok(new APIResponse<>(this.productService.geProductsByMulti(category, description, price, quantity).stream().
+                                    @RequestParam(required = false) Integer quantity,
+                                    @RequestParam(required = false) String description){
+        return ResponseEntity.ok(new APIResponse<>(this.productService.geProductsByMulti(category_name, name, price, quantity, description).stream().
         map((p->this.productService.converToDTO(p))).collect(Collectors.toList())
         ));
     }

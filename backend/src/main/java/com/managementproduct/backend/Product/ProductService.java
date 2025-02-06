@@ -69,8 +69,14 @@ public class ProductService {
         return ResponseEntity.ok().body("The row is not delted").getStatusCode();
     }
 
-    public List<Product> geProductsByMulti(Category category, String name, Double price, Integer quantity) {
-        return productRepository.multiSearch(category, name, price, quantity);
+    public List<Product> geProductsByMulti(String category_name, String name, Double price, Integer quantity, String description) {
+        System.out.println("🔍 Received search parameters: ");
+        System.out.println("name = " + name);
+        System.out.println("category = " + category_name);
+        System.out.println("price = " + price);
+        System.out.println("quantity = " + quantity);
+        System.out.println("description = " + description);
+        return productRepository.multiSearch(category_name, name, price, quantity, description);
     }
 
     public ProductDTO converToDTO(Product p ){

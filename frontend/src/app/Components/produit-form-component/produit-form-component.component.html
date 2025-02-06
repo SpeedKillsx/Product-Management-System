@@ -1,39 +1,52 @@
 <form [formGroup]="formgroupe">
-    <div class="row pt-2 center">
-        <div class="col-6">
-            <div class="form-group">
-                <label for="nameInput">Product Name</label>
-                <input  formControlName="name"  type="text" class="form-control" id="nameInput" placeholder="Product name">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nameInput" class="form-label">Product Name</label>
+                    <input formControlName="name" type="text" class="form-control" id="nameInput" placeholder="Enter product name" />
+                </div>
             </div>
-        </div>
-        <div class="col-6">
-            <div class="form-group">
-                <label for="descriptionInput">Product Description</label>
-                <textarea formControlName="description" class="form-control" id="descriptionInput" placeholder="Product description"></textarea>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="descriptionInput" class="form-label">Product Description</label>
+                    <textarea formControlName="description" class="form-control" id="descriptionInput" placeholder="Enter product description"></textarea>
+                </div>
             </div>
         </div>
 
-        <div class="col-6">
-            <div class="form-group">
-                <label for="priceInput">Product Price</label>
-                <input formControlName="price" type="text" class="form-control" id="priceInput" placeholder="Product price">
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="priceInput" class="form-label">Product Price</label>
+                    <input formControlName="price" type="number" class="form-control" id="priceInput" placeholder="Enter product price" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="quantityInput" class="form-label">Product Quantity</label>
+                    <input formControlName="quantity" type="number" class="form-control" id="quantityInput" placeholder="Enter product quantity" />
+                </div>
             </div>
         </div>
 
-        <div class="col-6">
-            <div class="form-group">
-                <label for="quantityInput">Product Quantity</label>
-                <input formControlName="quantity"   type="text" class="form-control" id="quantityInput" placeholder="Product quantity">
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="categorySelect" class="form-label">Product Category</label>
+                    <select formControlName="category_name" class="form-select" id="categorySelect">
+                        <option *ngFor="let category of categoriesList" [value]="category.name">{{ category.name }}</option>
+                    </select>
+                </div>
             </div>
         </div>
-        <div class="col-6">
-            <select name="" id="" formControlName="category_name">
-                <option *ngFor="let category of categoriesList" 
-                    [value]="category.name" >
-                        {{category.name}} 
-            </option>
-            </select>
+
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-4 text-center">
+                <button type="submit" class="btn btn-primary w-100" (click)="addProduct()">Submit</button>
+            </div>
         </div>
     </div>
 </form>
-<button type="submit" class="btn btn-primary" (click)="addProduct()">Submit</button>

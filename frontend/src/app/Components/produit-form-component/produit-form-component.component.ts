@@ -1,10 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Product } from '../../model/class/Product';
-import { ProduitFormService } from '../../services/produit-form-component.service';
+import { ProduitFormService } from '../../services/ProduitFormService/produit-form-component.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Category } from '../../model/class/Category';
 import { CommonModule } from '@angular/common';
 import { APIData } from '../../model/interface/APIData';
+import { error } from 'console';
 
 @Component({
   selector: 'app-produit-form-component',
@@ -39,10 +40,12 @@ export class ProduitFormComponentComponent implements OnInit{
       }else{
         alert('Error');
       }
+    }, (error)=>{
+      alert("ERROR OCCURED DURING THE CREATION OF THE PRODUCT")
     });
   }
 
-  loadCategories(){
+  public loadCategories(){
     this.prodFormService.loadCategories().subscribe((res:any)=>{
       this.categoriesList = res;
     })

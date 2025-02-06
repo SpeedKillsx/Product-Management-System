@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
-import { Product } from '../model/class/Product';
-import { APIData } from '../model/interface/APIData';
+import { environment } from '../../../environments/environment.development';
+import { Product } from '../../model/class/Product';
+import { APIData } from '../../model/interface/APIData';
 import { catchError, throwError } from 'rxjs';
-import { Category } from '../model/class/Category';
+import { Category } from '../../model/class/Category';
 import { error } from 'console';
 
 @Injectable({

@@ -36,7 +36,7 @@ public class ProductService {
     public Product addProduct(ProductDTO productDTO) throws EntityNotFoundException {
         Category category = prodCategoryRepository.findByName(productDTO.getCategory_name())
                 .orElseThrow(() -> new EntityNotFoundException("Category with name " + productDTO.getCategory_name() + " does not exist"));
-    
+        
         Product product = new Product();
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());

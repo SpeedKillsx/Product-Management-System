@@ -6,6 +6,7 @@ import { ProduitListServiceService } from '../../services/ProduitListService/pro
 import { APIData } from '../../model/interface/APIData';
 import { Category } from '../../model/class/Category';
 import { ProduitFormService } from '../../services/ProduitFormService/produit-form-component.service';
+import { ProduitDetailService } from '../../services/ProduitDetailService/produit-detail.service';
 
 // TODO: Make imports between components
 @Component({
@@ -19,10 +20,11 @@ export class ProduitDetailComponent implements OnInit{
   
   productList: Product[] = [];
   categoriesList: Category[] = [];
-  prodListService = inject(ProduitListServiceService);
-  prodFormService = inject(ProduitFormService)
+  
   selectedId:number = 0;
-
+  prodListService = inject(ProduitListServiceService);
+  prodFormService = inject(ProduitFormService);
+  prodDetailService = inject(ProduitDetailService);
 
     // Create a Form group
     formgroupe:FormGroup = new FormGroup({
@@ -34,8 +36,13 @@ export class ProduitDetailComponent implements OnInit{
     });
   
     ngOnInit(): void {
+      // Load the product
       this.UpdateListe();
-      
+      // Call the loadCategories method from prodFromService
+      this.prodFormService.loadCategories().subscribe((res:any)=>{
+        this.categoriesList = res;
+        console.log("Les cat = ", res);
+      });
     }
     /*
       Load the products 
@@ -62,9 +69,7 @@ export class ProduitDetailComponent implements OnInit{
           // then for each cell, return its textContent by mapping on the array
           const tds = Array.from(row.cells).map(td => td.textContent);
           this.selectedId = idx;
-          console.log('tds', tds)
-          // Log the row index
-          console.log('row index:', this.selectedId);
+          
           this.formgroupe.controls['name'].setValue(tds[0]);
           this.formgroupe.controls['description'].setValue(tds[1]);
           this.formgroupe.controls['price'].setValue(tds[2]);
@@ -72,8 +77,18 @@ export class ProduitDetailComponent implements OnInit{
           this.formgroupe.controls['category_name'].setValue(tds[4]);
          
         });
+      }); 
+    }
+    // Update the product from the table
+    updateProduct(){
+      const formValue = this.formgroupe.value;
+      this.prodDetailService.updateProduct(formValue).subscribe((res:APIData)=>{
+          if(res){
+            alert("Update Done");
+          }else{
+            alert("Update ERROR");
+          }
       });
       
-     
     }
 }

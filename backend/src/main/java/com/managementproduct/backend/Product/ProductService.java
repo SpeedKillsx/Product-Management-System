@@ -74,7 +74,7 @@ public class ProductService {
     }
 
     public ProductDTO converToDTO(Product p ){
-        return new ProductDTO(p.getName(), p.getDescription(), p.getPrice(), p.getQuantity(), p.getCategory().getname());
+        return new ProductDTO(p.getId(),p.getName(), p.getDescription(), p.getPrice(), p.getQuantity(), p.getCategory().getname());
     }
 
 

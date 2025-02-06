@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.http.RequestEntity.BodyBuilder;
 import org.springframework.stereotype.Service;
 
 import com.managementproduct.backend.Category.Category;
@@ -70,15 +69,10 @@ public class ProductService {
     }
 
     public List<Product> geProductsByMulti(String category_name, String name, Double price, Integer quantity, String description) {
-        System.out.println("🔍 Received search parameters: ");
-        System.out.println("name = " + name);
-        System.out.println("category = " + category_name);
-        System.out.println("price = " + price);
-        System.out.println("quantity = " + quantity);
-        System.out.println("description = " + description);
         return productRepository.multiSearch(category_name, name, price, quantity, description);
     }
 
+    // Convert a Product to ProducDTO
     public ProductDTO converToDTO(Product p ){
         return new ProductDTO(p.getId(),p.getName(), p.getDescription(), p.getPrice(), p.getQuantity(), p.getCategory().getname());
     }

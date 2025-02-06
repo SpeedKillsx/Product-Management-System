@@ -90,6 +90,18 @@ export class ProduitDetailComponent implements OnInit{
             alert("Update ERROR");
           }
       });
-      
+    }
+
+    // Delete the product
+    deleteProductController(){
+      const product = this.productList.find((prod)=>{return prod.id == this.productId});
+      console.log("le produit = ", product)
+      this.prodDetailService.deleteProduct(this.productId).subscribe((res:APIData)=>{
+        if (res){
+          alert("The product : "+product?.name+" is deleted");
+        }else{
+          alert("Could not delete The product : "+product?.name);
+        }
+      })
     }
 }

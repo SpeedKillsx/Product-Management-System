@@ -13,8 +13,17 @@ export class ProduitDetailService {
 
   updateProduct(obj:Product){
   return this.http.put<APIData>(`${environment.API_URL}produits/${obj.id}`, obj).pipe(catchError(error => {
-                    console.error('Erreur lors de la modification du produit:', error);
-                    return throwError(() => new Error('Échec de la mise a jour du produit.'));
+                    
+                    return throwError(() => new Error('ERROR occured during the updating process : ', error));
                 }));
+  }
+/*
+ {@param} Product : Object Product to delelte
+*/
+  deleteProduct(id:number){
+    return this.http.delete<APIData>(`${environment.API_URL}produits/${id}`).pipe(catchError(error => {
+      
+      return throwError(() => new Error('ERROR occurred during the deleting process : \n', error));
+  }))
   }
 }

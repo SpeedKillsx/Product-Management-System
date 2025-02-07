@@ -8,6 +8,11 @@ import com.managementproduct.backend.APIResponse.APIResponse;
 import com.managementproduct.backend.Category.Category;
 import com.managementproduct.backend.DTO.ProductDTO;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
+@Tag(name = "Products", description = "API for products managment")
 @RequestMapping(path = "api/v1/produits")
 public class ProductController {
     
@@ -36,6 +42,15 @@ public class ProductController {
 
 
     @GetMapping("/")
+    @Operation(
+        summary = "List all the available products.",
+        description = "It lists all the products stored on DBMange database using a POST RESQUEST to the server",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "The products where loaded succefully." , useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "500", description = "The products where not loaded succefully." , useReturnTypeSchema = true), 
+        }    
+    )
+    
     public ResponseEntity<APIResponse<List<ProductDTO>>> getAllProduct() {
         List<Product> products = this.productService.getAllProducts();
         if (products.isEmpty()){
@@ -47,7 +62,43 @@ public class ProductController {
         return ResponseEntity.ok(new APIResponse<>(productDTOs));
 
     }
+
     @PostMapping("/")
+    @Operation(
+        summary = "Add a new product",
+        description = "This method is responsible for the products adding operation",
+        parameters = {
+            @Parameter(
+               name = "name",
+               required = true,
+               description = "The name of the product"
+            ),
+            @Parameter(
+                name = "description",
+                required = true,
+                description = "The description of the product"
+            ),
+            @Parameter(
+                name = "price",
+                required = true,
+                description = "The price of the product"
+            ),
+            @Parameter(
+                name = "quantity",
+                required = true,
+                description = "The quantity of the product"
+            ),
+            @Parameter(
+                name = "category_name",
+                required = true,
+                description = "The category name of the product"
+            )
+        },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "The product is succefully added"),
+            @ApiResponse(responseCode = "500", description = "The product is not added")
+        }
+    )
     public Product addProduct(@RequestBody ProductDTO product) throws IllegalStateException{
         return this.productService.addProduct(product);
     }
